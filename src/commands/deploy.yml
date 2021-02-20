@@ -1,0 +1,10 @@
+description: >
+  Deploy app if version changed
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+
+steps:
+  - run: git show HEAD~1:mix.exs  > mix.old.exs
+  - run:
+      name: Deploy
+      command: <<include(scripts/deploy.sh)>>
