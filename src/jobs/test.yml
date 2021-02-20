@@ -12,7 +12,7 @@ executor:
   name: elixir
 steps:
   - checkout
-  - run: mix do local.hex --force, local.rebar --force
+#  - run: mix do local.hex --force, local.rebar --force
   - run: mix deps.get
   - run: mix compile --warnings-as-errors --force
   - run: mix credo --strict
