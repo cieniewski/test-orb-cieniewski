@@ -5,14 +5,14 @@ description: >
 
 docker:
   - image: circleci/elixir:1.10
-
+parameters:
+  dialyzer:
+    description: "Execute dialyzer?"
+    default: true
+    type: boolean
 steps:
   - checkout
-  - restore_cache:
-      name: Restore cached plt files
-      keys:
-        - plt-{{ checksum "mix.lock" }}{{ checksum "mix.exs" }}
-        - plt-
+
   - run: mix do local.hex --force, local.rebar --force
   - run: mix deps.get
   - run: mix compile --warnings-as-errors --force
@@ -21,9 +21,17 @@ steps:
   - run: mix test
   - store_test_results:
       path: test-results
-  - run: mix dialyzer
-  - save_cache:
-      name: Cache the plt files
-      key: plt-{{ checksum "mix.lock" }}{{ checksum "mix.exs" }}
-      paths:
-        - priv/plts
+  - when:
+      condition: <<parameters.dialyzer>>
+      steps:
+        - restore_cache:
+            name: Restore cached plt files
+            keys:
+              - plt-{{ checksum "mix.lock" }}{{ checksum "mix.exs" }}
+              - plt-
+        - run: mix dialyzer
+        - save_cache:
+            name: Cache the plt files
+            key: plt-{{ checksum "mix.lock" }}{{ checksum "mix.exs" }}
+            paths:
+              - priv/plts
