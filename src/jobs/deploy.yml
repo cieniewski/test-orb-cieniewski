@@ -1,0 +1,13 @@
+description: >
+  Deploy package to hex repo
+# What will this job do?
+# Descriptions should be short, simple, and clear.
+
+docker:
+  - image: circleci/elixir:1.10
+working_directory: /mnt/ramdisk
+steps:
+  - checkout
+  - run: mix do local.hex --force, local.rebar --force
+  - run: mix deps.get
+  - run: mix deploy
