@@ -3,7 +3,8 @@ description: >
 # What will this job do?
 # Descriptions should be short, simple, and clear.
 
-executor: default
+docker:
+  - image: circleci/elixir:1.10
 
 steps:
   - checkout
