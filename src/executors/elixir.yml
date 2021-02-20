@@ -1,7 +1,7 @@
 description: >
   This is a sample executor using Docker and Node.
 docker:
-  - image: 'circleci/elixir:<<parameters.version>>'
+  - image: 'cimg/elixir:<<parameters.version>>'
 parameters:
   version:
     default: "1.10"

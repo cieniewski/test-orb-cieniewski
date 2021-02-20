@@ -4,19 +4,12 @@ description: >
 # Descriptions should be short, simple, and clear.
 
 parameters:
-  elixir_version:
-    default: "1.10"
-    description: >
-      Pick a specific circleci/elixir image variant:
-      https://hub.docker.com/r/cimg/elixir/tags
-    type: string
   dialyzer:
     description: "Execute dialyzer?"
     default: true
     type: boolean
 executor:
   name: elixir
-  version: <<parameters.elixir_version>>
 steps:
   - checkout
   - run: mix do local.hex --force, local.rebar --force

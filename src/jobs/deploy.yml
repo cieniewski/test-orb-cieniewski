@@ -3,8 +3,8 @@ description: >
 # What will this job do?
 # Descriptions should be short, simple, and clear.
 
-docker:
-  - image: circleci/elixir:1.10
+executor:
+  name: elixir
 working_directory: /mnt/ramdisk
 steps:
   - checkout
