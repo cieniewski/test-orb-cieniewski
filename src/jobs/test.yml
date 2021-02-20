@@ -1,0 +1,28 @@
+description: >
+  Test job for testing packages before merge
+# What will this job do?
+# Descriptions should be short, simple, and clear.
+
+executor: default
+
+steps:
+  - checkout
+  - restore_cache:
+      name: Restore cached plt files
+      keys:
+        - plt-{{ checksum "mix.lock" }}{{ checksum "mix.exs" }}
+        - plt-
+  - run: mix do local.hex --force, local.rebar --force
+  - run: mix deps.get
+  - run: mix compile --warnings-as-errors --force
+  - run: mix credo --strict
+  - run: mix format --check-formatted --dry-run
+  - run: mix test
+  - store_test_results:
+      path: test-results
+  - run: mix dialyzer
+  - save_cache:
+      name: Cache the plt files
+      key: plt-{{ checksum "mix.lock" }}{{ checksum "mix.exs" }}
+      paths:
+        - priv/plts
