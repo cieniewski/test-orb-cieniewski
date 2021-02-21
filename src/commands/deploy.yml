@@ -5,7 +5,15 @@ description: >
 
 steps:
   - run: git show HEAD~1:mix.exs  > mix.old.exs
-  - run: diff mix.old.exs mix.exs > diff.txt
+  - run:
+      command: diff mix.old.exs mix.exs > diff.txt
+      shell: /bin/sh -o pipefail
   - run:
       name: Deploy
-      command: <<include(scripts/deploy.sh)>>
+      command: |
+        if grep "version:" diff.txt; then
+            echo version not same
+            mix hex.publish --yes
+        else
+            echo version same
+        fi

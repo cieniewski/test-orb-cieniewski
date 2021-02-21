@@ -18,9 +18,9 @@ steps:
   - run: mix credo --strict
   - run: mix format --check-formatted --dry-run
   - run: mix test
-  - run: mix hex.publish --dry-run
   - store_test_results:
       path: test-results
+  - run: mix hex.publish --dry-run
   - when:
       condition: <<parameters.dialyzer>>
       steps:
