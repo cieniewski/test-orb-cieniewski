@@ -24,12 +24,12 @@ steps:
         - restore_cache:
             name: Restore cached plt files
             keys:
-              - plt-{{ checksum "mix.lock" }}{{ checksum "mix.exs" }}
+              - plt-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
               - plt-
         - run: mix dialyzer
         - save_cache:
             name: Cache the plt files
             when: always
-            key: plt-{{ checksum "mix.lock" }}{{ checksum "mix.exs" }}
+            key: plt-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
             paths:
               - priv/plts
