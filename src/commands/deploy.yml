@@ -4,6 +4,8 @@ description: >
 # Descriptions should be short, simple, and clear.
 
 steps:
+  - run: git show HEAD~1:mix.exs  > mix.old.exs
+  - run: diff mix.old.exs mix.exs > diff.txt
   - run:
       name: Deploy
       command: <<include(scripts/deploy.sh)>>
