@@ -7,7 +7,7 @@ steps:
   - run: git show HEAD~1:mix.exs  > mix.old.exs
   - run:
       command: diff mix.old.exs mix.exs > diff.txt
-      shell: /bin/sh -o pipefail
+      shell: /bin/bash -o pipefail
   - run:
       name: Deploy
       command: |
