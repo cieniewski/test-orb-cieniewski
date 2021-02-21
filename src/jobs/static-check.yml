@@ -5,7 +5,7 @@ description: >
 
 parameters:
   dialyzer:
-    description: "Execute dialyzer?"
+    description: "Run dialyzer?"
     default: true
     type: boolean
 executor:
@@ -25,7 +25,7 @@ steps:
             name: Restore cached plt files
             keys:
               - plt-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
-              - plt-
+#              - plt-
         - run: mix dialyzer
         - save_cache:
             name: Cache the plt files
