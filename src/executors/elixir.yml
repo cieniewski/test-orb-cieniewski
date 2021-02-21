@@ -2,6 +2,7 @@ description: >
   This is a sample executor using Docker and Node.
 docker:
   - image: 'cimg/elixir:<<parameters.version>>'
+resource_class: large
 parameters:
   version:
     default: "1.11"
