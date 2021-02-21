@@ -3,36 +3,12 @@ description: >
 # What will this job do?
 # Descriptions should be short, simple, and clear.
 
-parameters:
-  dialyzer:
-    description: "Execute dialyzer?"
-    default: true
-    type: boolean
 executor:
   name: elixir
 steps:
   - checkout
   - run: mix do local.hex --force, local.rebar --force
   - run: mix deps.get
-  - run: mix compile --warnings-as-errors --force
-  - run: mix credo --strict
-  - run: mix format --check-formatted --dry-run
   - run: mix test
   - store_test_results:
       path: test-results
-  - run: mix hex.publish --dry-run
-  - when:
-      condition: <<parameters.dialyzer>>
-      steps:
-        - restore_cache:
-            name: Restore cached plt files
-            keys:
-              - plt-{{ checksum "mix.lock" }}{{ checksum "mix.exs" }}
-              - plt-
-        - run: mix dialyzer
-        - save_cache:
-            name: Cache the plt files
-            when: always
-            key: plt-{{ checksum "mix.lock" }}{{ checksum "mix.exs" }}
-            paths:
-              - priv/plts
