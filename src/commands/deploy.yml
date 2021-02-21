@@ -6,7 +6,7 @@ description: >
 steps:
   - run: git show HEAD~1:mix.exs  > mix.old.exs
   - run:
-      command: diff mix.old.exs mix.exs > diff.txt
+      command: diff mix.old.exs mix.exs > diff.txt || true
       shell: /bin/bash
   - run:
       name: Deploy
